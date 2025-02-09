@@ -1,9 +1,21 @@
 import express from "express";
+import { getEnvVar } from "./utils/getEnvVar.js";
+import moviesRouter from "./routes/movies.js";
 
-const app = express();
+const PORT = Number(getEnvVar("PORT", "3000"));
 
 export const setupServer = () => {
-  app.listen(3000, () => {
-    console.log(`Server is running on port 3000`);
+  const app = express();
+
+  app.use(express.json());
+
+  app.get("/", (req, res) => {
+    res.send("Hello, world");
+  });
+
+  app.use(moviesRouter);
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 };
