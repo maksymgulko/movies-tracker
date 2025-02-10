@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { getMovies } from "../services/movies.js";
+import { addMovie, getMovies } from "../services/movies.js";
 
 export const getAllMoviesController = async (req, res) => {
   const movies = await getMovies();
@@ -12,5 +12,16 @@ export const getAllMoviesController = async (req, res) => {
     status: 200,
     message: "Successfully found movies!",
     data: movies,
+  });
+};
+
+export const addMovieController = async (req, res) => {
+  const payload = req.body;
+  const movie = addMovie(payload);
+
+  return res.status(201).json({
+    status: 201,
+    message: "Movie was added to the favorites",
+    data: movie,
   });
 };
