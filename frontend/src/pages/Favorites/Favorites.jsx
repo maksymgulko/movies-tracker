@@ -12,7 +12,7 @@ const Favorites = () => {
         if (movies.ok) {
           const result = await movies.json();
           setFavorites(result.data);
-          console.log("Movie successfully fetched");
+          console.log("Movies successfully fetched");
         } else {
           console.error("Failed to fetch movies");
         }
@@ -21,7 +21,7 @@ const Favorites = () => {
       }
     };
     getFavMovies();
-  });
+  }, []);
 
   return (
     <div>

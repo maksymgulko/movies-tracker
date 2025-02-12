@@ -2,15 +2,13 @@ import Movie from "../Movie/Movie.jsx";
 
 const MoviesList = ({ movies }) => {
   return (
-    <div>
+    <ul>
       {movies.map((movie) => (
-        <ul key={movie.id}>
-          <li>
-            <Movie movie={movie} />
-          </li>
-        </ul>
+        <li key={movie.tmdbId}>
+          <Movie movie={movie} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 export default MoviesList;
