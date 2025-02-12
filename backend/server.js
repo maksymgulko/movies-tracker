@@ -2,7 +2,7 @@ import express from "express";
 import { getEnvVar } from "./utils/getEnvVar.js";
 import moviesRouter from "./routes/movies.js";
 
-const PORT = Number(getEnvVar("PORT", "3000"));
+const PORT = Number(getEnvVar("PORT", "3001"));
 
 export const setupServer = () => {
   const app = express();

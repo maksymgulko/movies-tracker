@@ -17,7 +17,12 @@ export const getAllMoviesController = async (req, res) => {
 
 export const addMovieController = async (req, res) => {
   const payload = req.body;
-  const movie = addMovie(payload);
+  const movieData = {
+    ...payload,
+    tmdbId: payload.id,
+  };
+
+  const movie = await addMovie(movieData);
 
   return res.status(201).json({
     status: 201,

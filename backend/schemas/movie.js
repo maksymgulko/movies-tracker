@@ -20,7 +20,7 @@ const movieSchema = new Schema(
     release_date: {
       type: Date,
     },
-    genres: [
+    genre_ids: [
       {
         type: String,
       },

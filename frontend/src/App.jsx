@@ -1,10 +1,17 @@
 import "./App.css";
-import Home from "./pages/Home/Home.jsx";
+import Home from "./pages/Home/home.jsx";
+import Navigation from "./components/Navigation/Navigation.jsx";
+import Favorites from "./pages/Favorites/Favorites.jsx";
+import { Routes, Route } from "react-router";
 
 function App() {
   return (
     <>
-      <Home />
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
+      </Routes>
     </>
   );
 }
