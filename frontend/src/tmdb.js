@@ -23,3 +23,55 @@ export const searchTrendingMovies = async () => {
     return [];
   }
 };
+
+export const searchMovieById = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `/3/movie/${movieId}?language=en-US`,
+      options
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getMovieCast = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `/3/movie/${movieId}/credits?language=en-US`,
+      options
+    );
+    return response.data.cast;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getMovieReviews = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `/3/movie/${movieId}/reviews?language=en-US`,
+      options
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const searchMovieByName = async (movieName) => {
+  try {
+    const response = await axios.get(
+      `/3/search/movie?query=${movieName}&include_adult=true&language=en-US&page=1`,
+      options
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
