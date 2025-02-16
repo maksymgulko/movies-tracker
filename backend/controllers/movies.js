@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { addMovie, getMovies } from "../services/movies.js";
+import { addMovie, deleteMovie, getMovies } from "../services/movies.js";
 
 export const getAllMoviesController = async (req, res) => {
   const movies = await getMovies();
@@ -29,4 +29,14 @@ export const addMovieController = async (req, res) => {
     message: "Movie was added to the favorites",
     data: movie,
   });
+};
+
+export const deleteMovieController = async (req, res) => {
+  const { movieId } = req.params;
+  const movie = await deleteMovie(movieId);
+
+  if (!movie) {
+    throw createHttpError(404, "Movie not found");
+  }
+  res.status(204).send();
 };
