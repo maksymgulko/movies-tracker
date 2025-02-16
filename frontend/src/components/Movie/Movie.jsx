@@ -1,4 +1,12 @@
-const Movie = ({ movie }) => {
+import { Link, useLocation } from "react-router-dom";
+
+const Movie = ({ toShow, movie }) => {
+  const location = useLocation();
+
+  // Determine the movie identifier. Trending movies have 'id',
+  // while favorites (saved from TMDB) have 'tmdbId'.
+  const movieId = movie.id || movie.tmdbId;
+
   const addFavorite = async () => {
     try {
       const response = await fetch("/movies", {
@@ -6,6 +14,7 @@ const Movie = ({ movie }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        // When saving, the controller maps the 'id' to 'tmdbId'
         body: JSON.stringify(movie),
       });
 
@@ -21,10 +30,15 @@ const Movie = ({ movie }) => {
 
   return (
     <div>
-      <p>{movie.title}</p>
-      <button type="button" onClick={addFavorite}>
-        Add to favorites
-      </button>
+      {/* Link now points to /search/:movieId */}
+      <Link to={`/search/${movieId}`} state={location}>
+        <p>{movie.title}</p>
+      </Link>
+      {toShow && (
+        <button type="button" onClick={addFavorite}>
+          Add to favorites
+        </button>
+      )}
     </div>
   );
 };

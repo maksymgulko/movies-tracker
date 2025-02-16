@@ -11,6 +11,7 @@ export default defineConfig({
     },
   },
   server: {
+    historyApiFallback: true,
     proxy: {
       "/movies": {
         target: "http://localhost:3005",

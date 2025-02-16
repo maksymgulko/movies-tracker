@@ -1,11 +1,11 @@
 import Movie from "../Movie/Movie.jsx";
 
-const MoviesList = ({ movies }) => {
+const MoviesList = ({ toShow, movies }) => {
   return (
     <ul>
       {movies.map((movie) => (
         <li key={movie.tmdbId}>
-          <Movie movie={movie} />
+          <Movie toShow={toShow} movie={movie} />
         </li>
       ))}
     </ul>

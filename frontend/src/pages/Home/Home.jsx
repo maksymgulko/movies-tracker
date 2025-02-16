@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <>
       <h1>Trending movies today:</h1>
-      <MoviesList movies={trendingMovies} />
+      <MoviesList toShow={true} movies={trendingMovies} />
     </>
   );
 };
