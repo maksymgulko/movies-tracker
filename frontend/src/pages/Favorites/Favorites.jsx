@@ -5,12 +5,11 @@ const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    const getFavMovies = async () => {
+    async function getFavMovies() {
       try {
-        const movies = await fetch("/movies");
-
-        if (movies.ok) {
-          const result = await movies.json();
+        const response = await fetch("/movies");
+        if (response.ok) {
+          const result = await response.json();
           setFavorites(result.data);
           console.log("Movies successfully fetched");
         } else {
@@ -19,14 +18,28 @@ const Favorites = () => {
       } catch (error) {
         console.error(error);
       }
-    };
+    }
     getFavMovies();
   }, []);
 
+  // Callback to remove a movie from favorites in local state
+  const handleDelete = (deletedId) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.filter((movie) => movie._id !== deletedId)
+    );
+  };
+
   return (
     <div>
-      <MoviesList movies={favorites} />
+      <h1>Favorite Movies</h1>
+      <MoviesList
+        toShow={false}
+        deletable={true}
+        movies={favorites}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
+
 export default Favorites;

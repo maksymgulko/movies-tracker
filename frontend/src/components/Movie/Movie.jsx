@@ -1,11 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 
-const Movie = ({ toShow, movie }) => {
+const Movie = ({ toShow, deletable, movie, onDelete }) => {
   const location = useLocation();
-
-  // Determine the movie identifier. Trending movies have 'id',
-  // while favorites (saved from TMDB) have 'tmdbId'.
-  const movieId = movie.id || movie.tmdbId;
+  // For linking to details, we use movie.id (if available) or movie.tmdbId.
+  const detailsId = movie.id || movie.tmdbId;
 
   const addFavorite = async () => {
     try {
@@ -14,10 +12,8 @@ const Movie = ({ toShow, movie }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        // When saving, the controller maps the 'id' to 'tmdbId'
         body: JSON.stringify(movie),
       });
-
       if (response.ok) {
         console.log("Movie added to favorites successfully");
       } else {
@@ -28,15 +24,38 @@ const Movie = ({ toShow, movie }) => {
     }
   };
 
+  const deleteFavorite = async () => {
+    try {
+      // We assume that the movie object includes the Mongo _id field.
+      const movieId = movie._id;
+      const response = await fetch(`/movies/${movieId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        console.log("Movie removed from favorites successfully");
+        // Inform parent component so it can update its state.
+        if (onDelete) onDelete(movieId);
+      } else {
+        console.error("Failed to remove movie");
+      }
+    } catch (error) {
+      console.error("Error while removing movie:", error);
+    }
+  };
+
   return (
     <div>
-      {/* Link now points to /search/:movieId */}
-      <Link to={`/search/${movieId}`} state={location}>
+      <Link to={`/search/${detailsId}`} state={location}>
         <p>{movie.title}</p>
       </Link>
       {toShow && (
         <button type="button" onClick={addFavorite}>
           Add to favorites
+        </button>
+      )}
+      {deletable && (
+        <button type="button" onClick={deleteFavorite}>
+          Delete from favorites
         </button>
       )}
     </div>
