@@ -7,10 +7,10 @@ import {
 
 const router = Router();
 
-router.get("/movies", getAllMoviesController);
+router.get("/", getAllMoviesController);
 
-router.post("/movies", addMovieController);
+router.post("/", addMovieController);
 
-router.delete("/movies/:movieId", deleteMovieController);
+router.delete("/:movieId", deleteMovieController);
 
 export default router;
